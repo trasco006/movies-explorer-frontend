@@ -1,0 +1,125 @@
+.register {
+    width: 396px;
+    margin: 0 auto;
+}
+
+.register__header {
+    padding: 70px 0 0 0;
+}
+
+.register__title {
+    margin: 40px 0;
+    font-family: Inter, 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    color: #FFFFFF;
+}
+
+.register__form-input-prompt {
+    margin: 0 0 10px;
+    padding: 0;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 12px;
+    color: #8B8B8B;
+}
+
+.register__form-input {
+    width: 396px;
+    height: 46px;
+    outline: none;
+    background: none;
+    background-color: #2F2F2F;
+    border: none;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 0 0 10px;
+    box-sizing: border-box;
+    font-family: Inter, 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    color: #FFFFFF;
+}
+
+.register__form-container {
+
+    margin: 0 0 69px;
+}
+
+.register__submit-button {
+    cursor: pointer;
+    outline: none;
+    border: none;
+    width: 396px;
+    height: 45px;
+    background-color: #4285F4;
+    border-radius: 3px;
+    font-family: Inter, 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #FFFFFF;
+    margin: 0 0 16px
+}
+
+.register__submit-button:hover {
+    opacity: .8;
+    transition: opacity .4s ease-in-out;
+}
+
+.register__submit-button:active {
+    opacity: .4;
+    transition: opacity .2s ease-in-out;
+}
+
+.register__reg-faq {
+    margin: 0;
+    padding: 0;
+    font-family: Inter, 'Arial', sans-serif;
+    text-align: center;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #8B8B8B;
+}
+
+.register__login-link {
+    font-family: Inter, 'Arial', sans-serif;
+    text-align: center;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #4285F4;;
+    text-decoration: none;
+}
+
+.register__login-link:hover {
+    text-decoration: underline;
+    opacity: .8;
+    transition: opacity .4s ease-in-out;
+}
+
+.register__login-link:active {
+    opacity: .4;
+    transition: opacity .2s ease-in-out;
+}
+
+.register__form-input-error{
+    font-family: Inter, 'Arial', sans-serif;
+    padding: 0;
+    margin: 0;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 12px;
+    color: #EE3465;
+}

@@ -1,0 +1,71 @@
+
+.switch {
+    gap: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#mc3 {
+    display: none;
+}
+
+.switch-label {
+    background: #202020;
+    width: 40px;
+    height: 20px;
+    border-radius: 10px;
+    display: inline-block;
+    position: relative;
+    margin: 0;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.1)
+}
+
+.switch-label:hover {
+    cursor: pointer;
+    opacity: .8;
+    transition: all .4s ease-in-out;
+}
+.switch-label:active{
+    opacity: .4;
+    transition: opacity .2s ease-in-out;
+}
+
+.switch-label:after {
+    content: "";
+    height: 18px;
+    width: 18px;
+    border-radius: 9px;
+    display: block;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    background: #3DDC84;
+    transition: ease-in-out 0.3s;
+}
+
+input[type=checkbox]:checked + label:after {
+    left: calc(100% - 19px);
+    background: #3DDC84;
+}
+
+.switch-text {
+    cursor: pointer;
+    font-family: Inter, 'Arial', sans-serif;
+    display: inline-block;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 18px;
+    color: #FFFFFF;
+}
+
+.switch-text:hover{
+    opacity: .8;
+    transition: all .4s ease-in-out;
+}
+
+.switch-text:active{
+    opacity: .4;
+    transition: opacity .2s ease-in-out;
+}

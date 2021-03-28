@@ -1,0 +1,29 @@
+.navigation{
+
+}
+.navigation__links{
+    display: flex;
+    gap: 16px;
+    list-style: none;
+    font-family: Inter, 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 18px;
+    text-align: right;
+    color: #FFFFFF;
+}
+.navigation__link{
+    cursor: pointer;
+    font-family: Inter, 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 18px;
+    text-align: right;
+    color: #FFFFFF;
+}
+.navigation__link:hover{
+    opacity: .6;
+    transition: all .4s ease-in-out;
+}

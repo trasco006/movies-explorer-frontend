@@ -1,0 +1,22 @@
+.promo{
+    height: 427px;
+    background-color: #272727;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0 40px 0 40px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.promo__title{
+    max-width: 730px;
+    font-family: Inter, 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 50px;
+    line-height: 58px;
+    text-align: center;
+    letter-spacing: -0.04em;
+    color: #FFFFFF;
+}
