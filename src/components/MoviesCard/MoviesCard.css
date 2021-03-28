@@ -1,0 +1,116 @@
+.movies-card {
+    height: 281px;
+    width: 364px;
+    background-color: #222222;
+    /*background-color: antiquewhite;*/
+    border-radius: 6px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+}
+
+.movies-card__image-container {
+    height: 203px;
+    width: 364px;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.movies-card__image {
+    height: 100%;
+}
+
+.movies-card__about {
+    padding: 16px 16px 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+}
+
+.movies-card__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.movies-card__title {
+    padding: 0;
+    margin: 0 12px 0 0;
+    font-family: Inter, 'Arial', sans-serif;
+    max-width: 290px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    color: #FFFFFF;
+}
+
+.movies-card__like-button {
+    margin-right: 8px;
+    cursor: pointer;
+    width: 14px;
+    height: 12px;
+
+    background-size: contain;
+}
+
+.movies-card__like-button:hover {
+    opacity: .8;
+    transition: opacity .4s ease-in-out;
+}
+
+.movies-card__like-button_off {
+    background-image: url("../../images/like-button-off.svg");
+}
+
+.movies-card__like-button_on {
+    background-image: url("../../images/like-button-on.svg");
+}
+
+.movies-card__like-button:active {
+    opacity: .4;
+    transition: opacity .2s ease-in-out;
+}
+
+.movies-card__duration {
+    margin: 0;
+    padding: 0;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 11px;
+    line-height: 13px;
+    display: flex;
+    align-items: center;
+    color: #8B8B8B;
+}
+
+.movies-card-list__more-button {
+    margin: 50px auto 80px;
+    cursor: pointer;
+    background: none;
+    outline: none;
+    width: 320px;
+    height: 36px;
+    border-radius: 6px;
+    border: 1px solid #424242;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+}
+
+.movies-card-list__more-button:hover {
+    background-color: #222222;
+    transition: background-color .2s ease-in-out;
+}
+.movies-card-list__more-button:active{
+    background-color: #2F2F2F;
+    transition: background-color .2s ease-in-out;
+}
