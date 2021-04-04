@@ -10,9 +10,9 @@ const Login = () => {
       <form className="login__form">
         <div className="login__form-container">
           <p className="login__form-input-prompt">E-mail</p>
-          <input type="text"  className="login__form-input"/>
+          <input required type="text"  className="login__form-input"/>
           <p className="login__form-input-prompt">Пароль</p>
-          <input type="text" className="login__form-input"/>
+          <input required type="text" className="login__form-input"/>
         </div>
         <button type="submit" className="login__submit-button">Войти</button>
       </form>

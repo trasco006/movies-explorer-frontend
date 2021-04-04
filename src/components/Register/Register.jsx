@@ -13,14 +13,14 @@ const Register = () => {
       <form className="register__form">
         <div className="register__form-container">
           <p className="register__form-input-prompt">Имя</p>
-          <input type="text" className="register__form-input"/>
-          <p className="register__form-input-error"></p>
+          <input required type="text" className="register__form-input"/>
+          <p className="register__form-input-error"> </p>
           <p className="register__form-input-prompt">E-mail</p>
-          <input type="email" className="register__form-input"/>
-          <p className="register__form-input-error"></p>
+          <input required type="email" className="register__form-input"/>
+          <p className="register__form-input-error"> </p>
           <p className="register__form-input-prompt">Пароль</p>
-          <input type="password" className="register__form-input"/>
-          <p className="register__form-input-error"></p>
+          <input required type="password" className="register__form-input"/>
+          <p className="register__form-input-error"> </p>
         </div>
         <button type="submit" className="register__submit-button">Зарегистрироваться</button>
       </form>

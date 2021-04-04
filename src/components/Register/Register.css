@@ -45,7 +45,10 @@
     line-height: 16px;
     color: #FFFFFF;
 }
-
+.register__form-input:focus{
+    border: 1px solid #3DDC84;
+    box-shadow: 0 0 6px #3DDC84;
+}
 .register__form-container {
 
     margin: 0 0 69px;

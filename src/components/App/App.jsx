@@ -10,10 +10,20 @@ import Profile from "../Profile/Profile";
 import {Route, Switch} from 'react-router-dom'
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
+import {BurgerMenu} from "../BurgerMenu/BurgerMenu";
+
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(true);
   const [filterCheckboxValue, setFilterChechboxValue] = useState(false)
+
+  const [isBurgerMenuOpen, setBurgerMenuOpened] = useState(false)
+  const handleOpenBurgerMenu = () => {
+    setBurgerMenuOpened(true)
+  }
+  const handleCloseBurgerMenu = () => {
+    setBurgerMenuOpened(false)
+  }
 
   const handleSetFilterCheckboxValue = (item) => {
     setFilterChechboxValue(!filterCheckboxValue)
@@ -21,36 +31,54 @@ function App() {
   const handleLogin = () => {
     setLoggedIn(!loggedIn)
   }
-  console.log(filterCheckboxValue)
+
   return (
     <div className="app">
       <div className="page">
-        <Switch>
+        {(isBurgerMenuOpen === true) ? <BurgerMenu closeBurgerMenu={handleCloseBurgerMenu}/> : null}
+          <Switch>
           <Route path="/sign-in">
             <Login/>
           </Route>
           <Route path="/movies">
+            <Header isBurgerMenuOpen={isBurgerMenuOpen}
+                    handleOpenBurgerMenu={handleOpenBurgerMenu}
+                    handleCloseBurgerMenu={handleCloseBurgerMenu}
+                    handleLoggin={handleLogin} loggedIn={loggedIn}/>
             <Movies handleCheckboxSet={handleSetFilterCheckboxValue}/>
+            <Footer/>
           </Route>
           <Route path="/saved-movies">
+            <Header isBurgerMenuOpen={isBurgerMenuOpen}
+                    handleOpenBurgerMenu={handleOpenBurgerMenu}
+                    handleCloseBurgerMenu={handleCloseBurgerMenu}
+                    handleLoggin={handleLogin} loggedIn={loggedIn}/>
             <Movies handleCheckboxSet={handleSetFilterCheckboxValue}/>
+            <Footer/>
           </Route>
           <Route path="/sign-up">
             <Register/>
           </Route>
           <Route path="/profile">
-            <Header handleLoggin={handleLogin} loggedIn={loggedIn}/>
+            <Header isBurgerMenuOpen={isBurgerMenuOpen}
+                    handleOpenBurgerMenu={handleOpenBurgerMenu}
+                    handleCloseBurgerMenu={handleCloseBurgerMenu}
+                    handleLoggin={handleLogin} loggedIn={loggedIn}/>
             <Profile/>
           </Route>
           <Route path="/error">
             <Error/>
           </Route>
           <Route path="/">
-            <Header handleLoggin={handleLogin} loggedIn={loggedIn}/>
+            <Header isBurgerMenuOpen={isBurgerMenuOpen}
+                    handleOpenBurgerMenu={handleOpenBurgerMenu}
+                    handleCloseBurgerMenu={handleCloseBurgerMenu}
+                    handleLoggin={handleLogin} loggedIn={loggedIn}/>
             <Main/>
             <Footer/>
           </Route>
         </Switch>
+
       </div>
     </div>
   );
