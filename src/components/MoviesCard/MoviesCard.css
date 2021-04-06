@@ -42,7 +42,6 @@
     cursor: pointer;
     width: 14px;
     height: 12px;
-
     background-size: contain;
 }
 .movies-card__like-button:hover {

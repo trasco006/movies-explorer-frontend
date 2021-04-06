@@ -15,7 +15,7 @@ import {BurgerMenu} from "../BurgerMenu/BurgerMenu";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(true);
-  const [filterCheckboxValue, setFilterChechboxValue] = useState(false)
+  const [filterCheckboxValue, setFilterCheckboxValue] = useState(false)
 
   const [isBurgerMenuOpen, setBurgerMenuOpened] = useState(false)
   const handleOpenBurgerMenu = () => {
@@ -25,8 +25,8 @@ function App() {
     setBurgerMenuOpened(false)
   }
 
-  const handleSetFilterCheckboxValue = (item) => {
-    setFilterChechboxValue(!filterCheckboxValue)
+  const handleSetFilterCheckboxValue = () => {
+    setFilterCheckboxValue(!filterCheckboxValue)
   }
   const handleLogin = () => {
     setLoggedIn(!loggedIn)

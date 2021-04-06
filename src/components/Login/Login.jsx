@@ -4,7 +4,7 @@ const Login = () => {
   return (
     <div className='login'>
       <div className="login__header">
-        <div className="logo"/>
+        <div className="logo login__logo"/>
         <h1 className="login__title">Рады видеть!</h1>
       </div>
       <form className="login__form">

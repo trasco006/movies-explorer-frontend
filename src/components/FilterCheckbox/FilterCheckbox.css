@@ -12,7 +12,7 @@
 
 .switch-label {
     background: #202020;
-    width: 40px;
+    width: 36px;
     height: 20px;
     border-radius: 10px;
     display: inline-block;
@@ -33,8 +33,8 @@
 
 .switch-label:after {
     content: "";
-    height: 18px;
-    width: 18px;
+    height: 16px;
+    width: 16px;
     border-radius: 9px;
     display: block;
     position: absolute;

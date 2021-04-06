@@ -41,6 +41,7 @@
     font-weight: 500;
     font-size: 11px;
     line-height: 13px;
+    margin: 0;
     color: #FFFFFF;
 }
 
@@ -57,7 +58,6 @@
     line-height: 13px;
     color: #FFFFFF;
 }
-
 
 .profile__submit-button {
     cursor: pointer;
@@ -103,4 +103,28 @@
     align-items: center;
     text-align: center;
     color: #EE3465;
+}
+
+@media (max-width: 1279px) {
+    .profile__title {
+        margin: 236px 0 96px 0;
+    }
+}
+
+@media (max-width: 767px) {
+    .profile__title {
+        margin: 70px 0 80px 0;
+    }
+
+    .profile {
+        width: 260px;
+    }
+
+    .profile__container {
+        width: 260px;
+    }
+
+    .profile__submit-button {
+        margin: 349px auto 0;
+    }
 }

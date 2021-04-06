@@ -6,7 +6,7 @@ const Register = () => {
     <div className='register'>
       <div className="register__header">
         <Link to="/">
-          <div className="logo"/>
+          <div className="logo register__logo"/>
         </Link>
         <h1 className="register__title">Добро пожаловать!</h1>
       </div>

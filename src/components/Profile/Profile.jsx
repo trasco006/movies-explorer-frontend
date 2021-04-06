@@ -4,7 +4,7 @@ const Profile = () => {
   return (
     <div className="profile">
       <h1 className="profile__title">Привет, Виталий!</h1>
-      <form action="" className="profile__form">
+      <form className="profile__form">
         <div className="profile__container">
           <p className="profile__input-helper">Имя</p>
           <input type="text" className="profile__form-input"/>
