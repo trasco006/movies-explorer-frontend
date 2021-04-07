@@ -7,7 +7,7 @@ import {AccountButton} from "../AccountButton/AccountButton";
 export default function Header(props) {
   const [isBurgerOpen, setBurgerOpened] = useState(false)
   window.addEventListener('resize', () => {
-    if (window.matchMedia("(min-width: 1279px)").matches === true) {
+    if (window.matchMedia("(min-width: 768px)").matches === true) {
       setBurgerOpened(true)
     } else {
       setBurgerOpened(false)
