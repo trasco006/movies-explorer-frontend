@@ -95,3 +95,16 @@
     background-color: #2F2F2F;
     transition: background-color .2s ease-in-out;
 }
+
+@media (max-width: 1279px) {
+    .movies-card__image-container {
+        height: 190px;
+    }
+}
+
+@media (max-width: 767px) {
+    .movies-card__image-container {
+    height: 168px;
+    }
+
+}
