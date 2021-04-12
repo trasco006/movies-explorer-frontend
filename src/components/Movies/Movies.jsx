@@ -14,7 +14,7 @@ const Movies = (props) => {
   return (
     <div>
       <SearchForm handleCheckboxSet={props.handleCheckboxSet}/>
-      <MoviesCardList movieInfo={movieInfo}/>
+      <MoviesCardList saveMovies={props.saveMovies} movieInfo={movieInfo}/>
       <Preloader/>
     </div>
   )

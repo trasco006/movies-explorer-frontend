@@ -45,7 +45,7 @@ function App() {
                     handleOpenBurgerMenu={handleOpenBurgerMenu}
                     handleCloseBurgerMenu={handleCloseBurgerMenu}
                     handleLoggin={handleLogin} loggedIn={loggedIn}/>
-            <Movies handleCheckboxSet={handleSetFilterCheckboxValue}/>
+            <Movies saveMovies={false} handleCheckboxSet={handleSetFilterCheckboxValue}/>
             <Footer/>
           </Route>
           <Route path="/saved-movies">
@@ -53,7 +53,7 @@ function App() {
                     handleOpenBurgerMenu={handleOpenBurgerMenu}
                     handleCloseBurgerMenu={handleCloseBurgerMenu}
                     handleLoggin={handleLogin} loggedIn={loggedIn}/>
-            <Movies handleCheckboxSet={handleSetFilterCheckboxValue}/>
+            <Movies saveMovies={true} handleCheckboxSet={handleSetFilterCheckboxValue}/>
             <Footer/>
           </Route>
           <Route path="/sign-up">
