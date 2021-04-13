@@ -24,17 +24,19 @@ const Login = (props) => {
   return (
     <div className='login'>
       <div className="login__header">
-        <div className="logo"/>
+        <div className="logo login__logo"/>
         <h1 className="login__title">Рады видеть!</h1>
       </div>
       <form onSubmit={handleSubmit} className="login__form">
         <div className="login__form-container">
           <p className="login__form-input-prompt">E-mail</p>
           <input onChange={getDataFromInput}
+                 required
                  type="text" id='email'
                  className="login__form-input"/>
           <p className="login__form-input-prompt">Пароль</p>
           <input onChange={getDataFromInput}
+                 required
                  type="password" id='password'
                  className="login__form-input"/>
         </div>

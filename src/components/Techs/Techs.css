@@ -64,3 +64,28 @@
     cursor: pointer;
 }
 
+@media (max-width: 1279px) {
+    .techs__title{
+        margin: 80px auto 22px;
+    }
+    .techs__container {
+        margin: 83px auto 90px;}
+    .techs__technologies{
+        width: 84px;
+        height: 57px;
+        line-height: 57px;
+        font-size: 12px ;
+    }
+}
+@media (max-width: 767px) {
+    .techs__title{
+        margin: 60px auto 24px;
+        font-size: 30px;
+        line-height: 36px;
+    }
+    .techs__container {
+        display: grid;
+        grid-template-columns: 84px 84px;
+        margin: 50px auto 70px;}
+
+}

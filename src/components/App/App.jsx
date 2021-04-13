@@ -12,6 +12,7 @@ import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import ProtectedRoute from "../ProtectedRoute";
 import api from "../../utils/MainApi";
+import {BurgerMenu} from "../BurgerMenu/BurgerMenu";
 
 function App() {
   const [isLoginPageIsOpen, setOpenLoginPage] = useState(() => {
@@ -23,7 +24,13 @@ function App() {
 
   const [loggedIn, setIsLogin] = useState(false);
   const [filterCheckboxValue, setFilterChechboxValue] = useState(false)
-
+  const [isBurgerMenuOpen, setBurgerMenuOpened] = useState(false)
+  const handleOpenBurgerMenu = () => {
+    setBurgerMenuOpened(true)
+  }
+  const handleCloseBurgerMenu = () => {
+    setBurgerMenuOpened(false)
+  }
   /**
    * Эффект при изменении жизненного цикла
    */
@@ -117,6 +124,7 @@ function App() {
   return (
     <div className="app">
       <div className="page">
+        {(isBurgerMenuOpen === true) ? <BurgerMenu closeBurgerMenu={handleCloseBurgerMenu}/> : null}
         <Switch>
           {(loggedIn !== true) ? (<Route path="/sign-in">
             <Login isLogin={loggedIn}
@@ -132,22 +140,28 @@ function App() {
           </Route>) : null}
 
           <Route path="/movies">
-            <ProtectedRoute component={Movies}
-                            handleCheckboxSet={handleSetFilterCheckboxValue}
-                            isLogin={loggedIn}/>
+            <Header isBurgerMenuOpen={isBurgerMenuOpen}
+                    handleOpenBurgerMenu={handleOpenBurgerMenu}
+                    handleCloseBurgerMenu={handleCloseBurgerMenu}
+                    handleLoggin={handleLogIn} loggedIn={loggedIn}/>
+            <Movies saveMovies={false} handleCheckboxSet={handleSetFilterCheckboxValue}/>
+            <Footer/>
           </Route>
-
           <Route path="/saved-movies">
-            <ProtectedRoute component={Movies}
-                            handleCheckboxSet={handleSetFilterCheckboxValue}
-                            isLogin={loggedIn}/>
+            <Header isBurgerMenuOpen={isBurgerMenuOpen}
+                    handleOpenBurgerMenu={handleOpenBurgerMenu}
+                    handleCloseBurgerMenu={handleCloseBurgerMenu}
+                    handleLoggin={handleLogIn} loggedIn={loggedIn}/>
+            <Movies saveMovies={true} handleCheckboxSet={handleSetFilterCheckboxValue}/>
+            <Footer/>
           </Route>
 
           <Route path="/profile">
-            <Header handleLoggin={handleLogIn}
-                    loggedIn={loggedIn}/>
-            <ProtectedRoute component={Profile}
-                            isLogin={loggedIn}/>
+            <Header isBurgerMenuOpen={isBurgerMenuOpen}
+                    handleOpenBurgerMenu={handleOpenBurgerMenu}
+                    handleCloseBurgerMenu={handleCloseBurgerMenu}
+                    handleLoggin={handleLogIn} loggedIn={loggedIn}/>
+            <Profile/>
           </Route>
 
           <Route path="/error">
@@ -155,11 +169,15 @@ function App() {
           </Route>
 
           <Route path="/">
-            <Header handleLoggin={handleLogIn} loggedIn={loggedIn}/>
+            <Header isBurgerMenuOpen={isBurgerMenuOpen}
+                    handleOpenBurgerMenu={handleOpenBurgerMenu}
+                    handleCloseBurgerMenu={handleCloseBurgerMenu}
+                    handleLoggin={handleLogIn} loggedIn={loggedIn}/>
             <Main/>
             <Footer/>
           </Route>
         </Switch>
+
       </div>
     </div>
   );

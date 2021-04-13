@@ -2,6 +2,7 @@ import './Register.css'
 import {Link} from "react-router-dom";
 import {useState} from "react";
 
+
 const Register = (props) => {
 
   /**
@@ -25,7 +26,7 @@ const Register = (props) => {
     <div className='register'>
       <div className="register__header">
         <Link to="/">
-          <div className="logo"/>
+          <div className="logo register__logo"/>
         </Link>
         <h1 className="register__title">Добро пожаловать!</h1>
       </div>
@@ -33,16 +34,16 @@ const Register = (props) => {
             onSubmit={handleSubmit}>
         <div className="register__form-container">
           <p className="register__form-input-prompt">Имя</p>
-          <input type="text"
+          <input required type="text"
                  id="name"
                  onChange={getDataFromInput}
                  className="register__form-input"/>
           <p className="register__form-input-error"/>
           <p className="register__form-input-prompt">E-mail</p>
-          <input type="email" id="email" onChange={getDataFromInput} className="register__form-input"/>
+          <input required type="email" id="email" onChange={getDataFromInput} className="register__form-input"/>
           <p className="register__form-input-error"/>
           <p className="register__form-input-prompt">Пароль</p>
-          <input type="password" id="password" onChange={getDataFromInput} className="register__form-input"/>
+          <input required type="password" id="password" onChange={getDataFromInput} className="register__form-input"/>
           <p className="register__form-input-error"/>
         </div>
         <button type="submit" className="register__submit-button">Зарегистрироваться</button>

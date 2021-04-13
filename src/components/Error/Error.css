@@ -1,10 +1,9 @@
 .error {
+    padding: 246px 0 0 0;
     margin: 0 auto;
-    padding: 0;
 }
 
 .error__code {
-    padding: 246px 0 0 0;
     margin: 0;
     font-family: Inter, 'Arial', sans-serif;
     font-style: normal;
@@ -15,7 +14,7 @@
     color: #FFFFFF;
 }
 
-.error__title{
+.error__title {
     margin: 5px 0 0 0;
     padding: 0;
     font-family: Inter, 'Arial', sans-serif;
@@ -25,8 +24,9 @@
     line-height: 19px;
     text-align: center;
     color: #FFFFFF;
-    }
-.error__back{
+}
+
+.error__back {
     display: block;
     margin: 184px 0 0 0;
     padding: 0;
@@ -37,4 +37,25 @@
     line-height: 17px;
     text-align: center;
     color: #4285F4;
+}
+
+@media (max-width: 767px) {
+    .error {
+        padding: 329px 0 0 0;
+    }
+
+    .error__code {
+        font-size: 80px;
+        line-height: 97px;
+    }
+
+    .error__title {
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .error__back {
+        font-size: 12px;
+        line-height: 15px;
+    }
 }

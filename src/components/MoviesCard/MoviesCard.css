@@ -1,15 +1,11 @@
 .movies-card {
-    height: 281px;
-    width: 364px;
     background-color: #222222;
-    /*background-color: antiquewhite;*/
+    height: 281px;
     border-radius: 6px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
 }
 
 .movies-card__image-container {
-    height: 203px;
-    width: 364px;
     overflow: hidden;
     margin: 0;
     padding: 0;
@@ -18,8 +14,13 @@
     justify-content: center;
 }
 
+.movie-card__close-button_hidden {
+    display: none;
+}
+
 .movies-card__image {
-    height: 100%;
+    max-width: 364px;
+    height: 203px;
 }
 
 .movies-card__about {
@@ -27,6 +28,10 @@
     display: flex;
     flex-direction: column;
     gap: 17px;
+}
+
+.movies-card__about:hover .movie-card__close-button_hidden {
+    display: flex;
 }
 
 .movies-card__container {
@@ -53,7 +58,6 @@
     cursor: pointer;
     width: 14px;
     height: 12px;
-
     background-size: contain;
 }
 
@@ -110,7 +114,61 @@
     background-color: #222222;
     transition: background-color .2s ease-in-out;
 }
-.movies-card-list__more-button:active{
+
+.movies-card-list__more-button:active {
     background-color: #2F2F2F;
     transition: background-color .2s ease-in-out;
 }
+
+.movie-card__close-button {
+    width: 12px;
+    height: 12px;
+    background-image: url('../../images/close.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+@media (max-width: 1279px) {
+    .movies-card__image-container {
+        height: 190px;
+    }
+
+    .movies-card__about {
+        padding: 15px 15px 0 15px;
+        gap: 15px;
+    }
+
+    .movies-card__image {
+        max-width: 339px;
+        height: 190px;
+    }
+
+    .movies-card {
+        height: 262px;
+    }
+}
+
+@media (max-width: 767px) {
+    .movies-card__image-container {
+        height: 168px;
+    }
+    .movies-card {
+        height: 237px;
+    }
+    .movies-card__about {
+        padding: 14px 14px 0 14px;
+        gap: 14px;
+    }
+
+    .movies-card__image {
+        max-width: 300px;
+        height: 168px;
+    }
+
+    .movie-card__close-button_hidden {
+        display: flex;
+    }
+}
+
+
+
