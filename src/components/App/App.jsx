@@ -10,57 +10,35 @@ import Profile from "../Profile/Profile";
 import {Route, Switch} from 'react-router-dom'
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
-import ProtectedRoute from "../ProtectedRoute";
 import api from "../../utils/MainApi";
 import {BurgerMenu} from "../BurgerMenu/BurgerMenu";
+import ProtectedRoute from "../ProtectedRoute";
 
 function App() {
-  const [isLoginPageIsOpen, setOpenLoginPage] = useState(() => {
-    return window.location.pathname === '/sign-in';
-  })
-  const [isRegistrationPageIsOpen, setOpenRegistrationPage] = useState(() => {
-    return window.location.pathname === '/sign-up';
-  })
-
   const [loggedIn, setIsLogin] = useState(false);
   const [filterCheckboxValue, setFilterChechboxValue] = useState(false)
   const [isBurgerMenuOpen, setBurgerMenuOpened] = useState(false)
+
+  /**
+   * Ручное открытие бургерного меню
+   */
   const handleOpenBurgerMenu = () => {
     setBurgerMenuOpened(true)
   }
+
+  /**
+   * Ручное закрытие бургерного меню
+   */
   const handleCloseBurgerMenu = () => {
     setBurgerMenuOpened(false)
   }
+
   /**
    * Эффект при изменении жизненного цикла
    */
   useEffect(() => {
     handleTokenCheck()
   })
-
-  /**
-   * Ручное закрытие всех окон
-   */
-  const handleCloseAllPages = () => {
-    setOpenLoginPage(false)
-    setOpenRegistrationPage(false)
-  }
-
-  /**
-   * Ручное открытие окна логина
-   */
-  const handleOpenLoginPage = () => {
-    handleCloseAllPages()
-    setOpenLoginPage(true)
-  }
-
-  /**
-   * Ручное открытие окна регистрации
-   */
-  const handleOpenRegistrationPage = () => {
-    handleCloseAllPages()
-    setOpenRegistrationPage(true)
-  }
 
   /**
    * Ручная проверка валидности токена
@@ -128,40 +106,42 @@ function App() {
         <Switch>
           {(loggedIn !== true) ? (<Route path="/sign-in">
             <Login isLogin={loggedIn}
-                   handleOpenRegistrationPage={handleOpenRegistrationPage}
                    handleLogIn={handleLogIn}/>
           </Route>) : null}
 
           {(loggedIn !== true) ? (<Route path="/sign-up">
             <Register
               handleRegister={handleRegister}
-              handleOpenLoginPage={handleOpenLoginPage}
               isLogin={loggedIn}/>
           </Route>) : null}
 
           <Route path="/movies">
-            <Header isBurgerMenuOpen={isBurgerMenuOpen}
-                    handleOpenBurgerMenu={handleOpenBurgerMenu}
-                    handleCloseBurgerMenu={handleCloseBurgerMenu}
-                    handleLoggin={handleLogIn} loggedIn={loggedIn}/>
-            <Movies saveMovies={false} handleCheckboxSet={handleSetFilterCheckboxValue}/>
-            <Footer/>
+            <ProtectedRoute component={Movies}
+                            saveMovies={false}
+                            isBurgerMenuOpen={isBurgerMenuOpen}
+                            handleOpenBurgerMenu={handleOpenBurgerMenu}
+                            handleCloseBurgerMenu={handleCloseBurgerMenu}
+                            handleLoggin={handleLogIn} loggedIn={loggedIn}
+                            handleCheckboxSet={handleSetFilterCheckboxValue}/>
           </Route>
+
           <Route path="/saved-movies">
-            <Header isBurgerMenuOpen={isBurgerMenuOpen}
-                    handleOpenBurgerMenu={handleOpenBurgerMenu}
-                    handleCloseBurgerMenu={handleCloseBurgerMenu}
-                    handleLoggin={handleLogIn} loggedIn={loggedIn}/>
-            <Movies saveMovies={true} handleCheckboxSet={handleSetFilterCheckboxValue}/>
-            <Footer/>
+            <ProtectedRoute component={Movies}
+                            saveMovies={true}
+                            isBurgerMenuOpen={isBurgerMenuOpen}
+                            handleOpenBurgerMenu={handleOpenBurgerMenu}
+                            handleCloseBurgerMenu={handleCloseBurgerMenu}
+                            handleLoggin={handleLogIn} loggedIn={loggedIn}
+                            handleCheckboxSet={handleSetFilterCheckboxValue}/>
           </Route>
 
           <Route path="/profile">
-            <Header isBurgerMenuOpen={isBurgerMenuOpen}
-                    handleOpenBurgerMenu={handleOpenBurgerMenu}
-                    handleCloseBurgerMenu={handleCloseBurgerMenu}
-                    handleLoggin={handleLogIn} loggedIn={loggedIn}/>
-            <Profile/>
+            <ProtectedRoute component={Profile}
+                            isBurgerMenuOpen={isBurgerMenuOpen}
+                            handleOpenBurgerMenu={handleOpenBurgerMenu}
+                            handleCloseBurgerMenu={handleCloseBurgerMenu}
+                            handleLoggin={handleLogIn} loggedIn={loggedIn}
+                            handleLogOut={handleLogOut}/>
           </Route>
 
           <Route path="/error">
