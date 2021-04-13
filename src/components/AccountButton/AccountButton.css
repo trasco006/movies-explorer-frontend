@@ -1,0 +1,37 @@
+.account {
+    width: 100px;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    color: #FFFFFF;
+    margin: 0 auto;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+    padding: 5px;
+    text-decoration: none;
+}
+.account__icon {
+    width: 26px;
+    height: 30px;
+    border-radius: 4px;
+    background-image: url("../../images/profile-ico.svg");
+    background-size: cover;
+}
+.account__title {
+    margin: 0;
+    padding: 0;
+    font-family: Inter, 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+}
+.account:hover {
+    background-color: #3DDC84;
+    color: #000000;
+    transition: all .4s ease-in-out;
+    cursor: pointer;
+}
