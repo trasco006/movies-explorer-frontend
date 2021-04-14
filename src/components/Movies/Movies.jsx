@@ -7,13 +7,6 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 
 const Movies = (props) => {
-  // ________________________CARD-DEVELOP-INFO
-  const movieInfo = {
-    link: '/card.jpg',
-    title: 'Сила Грома',
-    duration: '134'
-  }
-
   return (
     <div>
       <Header isBurgerMenuOpen={props.isBurgerMenuOpen}
@@ -21,8 +14,11 @@ const Movies = (props) => {
               handleCloseBurgerMenu={props.handleCloseBurgerMenu}
               handleLoggin={props.handleLogIn}
               loggedIn={props.loggedIn}/>
-      <SearchForm handleCheckboxSet={props.handleCheckboxSet}/>
-      <MoviesCardList saveMovies={props.saveMovies} movieInfo={movieInfo}/>
+      <SearchForm handleSubmit={props.handleGetMoviesData}
+                  handleCheckboxSet={props.handleCheckboxSet}/>
+      {props.cardsList.length !== 0 ? <MoviesCardList saveMovies={props.saveMovies}
+                                                      cardsList={props.cardsList}/> : null}
+
       <Preloader/>
       <Footer/>
     </div>

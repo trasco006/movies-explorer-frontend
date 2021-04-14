@@ -13,11 +13,24 @@ import Footer from "../Footer/Footer";
 import api from "../../utils/MainApi";
 import {BurgerMenu} from "../BurgerMenu/BurgerMenu";
 import ProtectedRoute from "../ProtectedRoute";
+import moviesApi from "../../utils/MoviesApi";
 
 function App() {
+  const [cardsList, setCardsList] = useState([])
+  const [userData, setUserData] = useState({})
   const [loggedIn, setIsLogin] = useState(false);
   const [filterCheckboxValue, setFilterChechboxValue] = useState(false)
   const [isBurgerMenuOpen, setBurgerMenuOpened] = useState(false)
+
+
+  /**
+   * Получение списка фильмов с сервера и запись в стейт
+   */
+  const handleGetMoviesData = ()=>{
+    moviesApi.getData().then(res=>{
+      setCardsList(res)
+    })
+  }
 
   /**
    * Ручное открытие бургерного меню
@@ -38,7 +51,7 @@ function App() {
    */
   useEffect(() => {
     handleTokenCheck()
-  })
+  }, [])
 
   /**
    * Ручная проверка валидности токена
@@ -48,6 +61,11 @@ function App() {
       const jwt = localStorage.getItem('jwt');
       api.checkToken(jwt).then((res) => {
         setIsLogin(true)
+        setUserData({
+          email: res.email,
+          name: res.email,
+          id: res._id
+        })
       })
         .catch((err) => {
           console.log(err);
@@ -98,8 +116,9 @@ function App() {
   const handleSetFilterCheckboxValue = (item) => {
     setFilterChechboxValue(!filterCheckboxValue)
   }
-
+//TODO сделать контекст
   return (
+    // <CurrentUserContext.Consumer >
     <div className="app">
       <div className="page">
         {(isBurgerMenuOpen === true) ? <BurgerMenu closeBurgerMenu={handleCloseBurgerMenu}/> : null}
@@ -117,6 +136,8 @@ function App() {
 
           <Route path="/movies">
             <ProtectedRoute component={Movies}
+                            cardsList={cardsList}
+                            handleGetMoviesData={handleGetMoviesData}
                             saveMovies={false}
                             isBurgerMenuOpen={isBurgerMenuOpen}
                             handleOpenBurgerMenu={handleOpenBurgerMenu}
@@ -160,7 +181,8 @@ function App() {
 
       </div>
     </div>
-  );
+    // </CurrentUserContext.Consumer>)
+  )
 }
 
 export default App;

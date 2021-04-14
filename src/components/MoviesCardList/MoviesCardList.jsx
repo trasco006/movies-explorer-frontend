@@ -3,24 +3,14 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import {useState} from "react";
 
 const MoviesCardList = (props) => {
-  const [data, setData] = useState([])
 
-  if (data.length === 0) {
+  if (props.cardsList.length !== 0) {
     return (
       <div>
         <div className="movies-card-list">
-          <MoviesCard saveMovies={props.saveMovies} movieInfo={props.movieInfo}/>
-          <MoviesCard saveMovies={props.saveMovies} movieInfo={props.movieInfo}/>
-          <MoviesCard saveMovies={props.saveMovies} movieInfo={props.movieInfo}/>
-          <MoviesCard saveMovies={props.saveMovies} movieInfo={props.movieInfo}/>
-          <MoviesCard saveMovies={props.saveMovies} movieInfo={props.movieInfo}/>
-          <MoviesCard saveMovies={props.saveMovies} movieInfo={props.movieInfo}/>
-          <MoviesCard saveMovies={props.saveMovies} movieInfo={props.movieInfo}/>
-          <MoviesCard saveMovies={props.saveMovies} movieInfo={props.movieInfo}/>
-          <MoviesCard saveMovies={props.saveMovies} movieInfo={props.movieInfo}/>
-          <MoviesCard saveMovies={props.saveMovies} movieInfo={props.movieInfo}/>
-          <MoviesCard saveMovies={props.saveMovies} movieInfo={props.movieInfo}/>
-          <MoviesCard saveMovies={props.saveMovies} movieInfo={props.movieInfo}/>
+          {props.cardsList.map((  item, index) =>{
+            return <MoviesCard key={index} saveMovies={props.saveMovies} movieInfo={item}/>
+          })}
         </div>
         <button className="movies-card-list__more-button">Ещё</button>
       </div>

@@ -2,9 +2,14 @@ import './SearchForm.css'
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox"
 
 const SearchForm = (props) => {
+  const handleSubmit=(evt)=>{
+    evt.preventDefault()
+    props.handleSubmit()
+  }
+
   return (
     <div className="search">
-      <form className="search__form">
+      <form onSubmit={handleSubmit} className="search__form">
         <div className="search__container">
           <div className="search__ico"/>
           <input required type="text" className="search__input" placeholder='Фильм'/>

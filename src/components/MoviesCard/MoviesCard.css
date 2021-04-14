@@ -6,6 +6,8 @@
 }
 
 .movies-card__image-container {
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
     overflow: hidden;
     margin: 0;
     padding: 0;
@@ -43,6 +45,7 @@
 
 .movies-card__title {
     padding: 0;
+    height: 16px;
     margin: 0 12px 0 0;
     font-family: Inter, 'Arial', sans-serif;
     max-width: 290px;
@@ -58,6 +61,8 @@
     cursor: pointer;
     width: 14px;
     height: 12px;
+    background-repeat: no-repeat;
+    background-position: center;
     background-size: contain;
 }
 
