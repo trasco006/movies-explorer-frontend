@@ -1,9 +1,32 @@
 import './MoviesCard.css'
-import {useState} from "react";
+import React, {useState} from "react";
+import {CurrentUser} from "../../contexts/CurrentUserContext";
+import api from "../../utils/MainApi";
 
 const MoviesCard = (props) => {
   const [isCardLiked, setCardLiked] = useState(false)
+  const currentUser = React.useContext(CurrentUser);
+
+  const data = {
+    country: props.movieInfo.country,
+    director: props.movieInfo.director,
+    duration: props.movieInfo.duration,
+    year: props.movieInfo.year,
+    description: props.movieInfo.description,
+    image: props.movieInfo.image.url,
+    trailer: props.movieInfo.trailerLink,
+    nameRU: props.movieInfo.nameRU,
+    nameEN: props.movieInfo.nameEN,
+    thumbnail: props.movieInfo.image.formats.thumbnail.url,
+    user: currentUser.id,
+    movieId: props.movieInfo.id
+  }
+
   const handleCardLike = () => {
+    api.addMovie(data).then(res=>{
+      console.log(res)
+    })
+
     setCardLiked(!isCardLiked)
   }
   const durationFormat = (data) => {
@@ -16,15 +39,15 @@ const MoviesCard = (props) => {
       return hours + ' ч ' + minutes + 'м'
     }
   }
-
   if (props.saveMovies === false) {
     return (
       <div className="movies-card">
         <div className="movies-card__image-container">
           {props.movieInfo.image ?
-            <img src={`https://api.nomoreparties.co${props.movieInfo.image.url}`}
-                 alt={props.movieInfo.nameRU}
-                 className="movies-card__image"/> : null}
+            <a href={props.movieInfo.trailerLink} target='_blank'>
+              <img src={`https://api.nomoreparties.co${props.movieInfo.image.url}`}
+                   alt={props.movieInfo.nameRU}
+                   className="movies-card__image"/></a> : null}
         </div>
         <div className="movies-card__about">
           <div className="movies-card__container">

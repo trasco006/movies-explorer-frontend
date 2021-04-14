@@ -14,6 +14,7 @@ import api from "../../utils/MainApi";
 import {BurgerMenu} from "../BurgerMenu/BurgerMenu";
 import ProtectedRoute from "../ProtectedRoute";
 import moviesApi from "../../utils/MoviesApi";
+import {CurrentUser} from "../../contexts/CurrentUserContext"
 
 function App() {
   const [cardsList, setCardsList] = useState([])
@@ -21,15 +22,31 @@ function App() {
   const [loggedIn, setIsLogin] = useState(false);
   const [filterCheckboxValue, setFilterChechboxValue] = useState(false)
   const [isBurgerMenuOpen, setBurgerMenuOpened] = useState(false)
-
+  const [isLoading, setLoading] = useState(false)
 
   /**
    * Получение списка фильмов с сервера и запись в стейт
    */
-  const handleGetMoviesData = ()=>{
-    moviesApi.getData().then(res=>{
-      setCardsList(res)
-    })
+  const handleGetMoviesData = (param) => {
+    setLoading(true)
+    setCardsList([])
+    let a = []
+    moviesApi.getData()
+      .then(res => {
+        res.map(item => {
+          param = param.toLowerCase()
+          if (item.nameRU !== null && item.nameRU.toLowerCase().includes(param) || item.nameEN !== null && item.nameEN.toLowerCase().includes(param)) {
+            return a.push(item)
+          }
+        })
+        setCardsList(a)
+      })
+      .catch(() => alert("Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"))
+      .finally(
+        () => {
+          setLoading(false)
+        }
+      )
   }
 
   /**
@@ -63,12 +80,12 @@ function App() {
         setIsLogin(true)
         setUserData({
           email: res.email,
-          name: res.email,
+          name: res.name,
           id: res._id
         })
       })
         .catch((err) => {
-          console.log(err);
+          alert(err.message);
         })
     }
   }
@@ -116,72 +133,72 @@ function App() {
   const handleSetFilterCheckboxValue = (item) => {
     setFilterChechboxValue(!filterCheckboxValue)
   }
-//TODO сделать контекст
   return (
-    // <CurrentUserContext.Consumer >
-    <div className="app">
-      <div className="page">
-        {(isBurgerMenuOpen === true) ? <BurgerMenu closeBurgerMenu={handleCloseBurgerMenu}/> : null}
-        <Switch>
-          {(loggedIn !== true) ? (<Route path="/sign-in">
-            <Login isLogin={loggedIn}
-                   handleLogIn={handleLogIn}/>
-          </Route>) : null}
+    <CurrentUser.Provider value={userData}>
+      <div className="app">
+        <div className="page">
+          {(isBurgerMenuOpen === true) ? <BurgerMenu closeBurgerMenu={handleCloseBurgerMenu}/> : null}
+          <Switch>
+            {(loggedIn !== true) ? (<Route path="/sign-in">
+              <Login isLogin={loggedIn}
+                     handleLogIn={handleLogIn}/>
+            </Route>) : null}
 
-          {(loggedIn !== true) ? (<Route path="/sign-up">
-            <Register
-              handleRegister={handleRegister}
-              isLogin={loggedIn}/>
-          </Route>) : null}
+            {(loggedIn !== true) ? (<Route path="/sign-up">
+              <Register
+                handleRegister={handleRegister}
+                isLogin={loggedIn}/>
+            </Route>) : null}
 
-          <Route path="/movies">
-            <ProtectedRoute component={Movies}
-                            cardsList={cardsList}
-                            handleGetMoviesData={handleGetMoviesData}
-                            saveMovies={false}
-                            isBurgerMenuOpen={isBurgerMenuOpen}
-                            handleOpenBurgerMenu={handleOpenBurgerMenu}
-                            handleCloseBurgerMenu={handleCloseBurgerMenu}
-                            handleLoggin={handleLogIn} loggedIn={loggedIn}
-                            handleCheckboxSet={handleSetFilterCheckboxValue}/>
-          </Route>
+            <Route path="/movies">
+              <ProtectedRoute component={Movies}
+                              isLoading={isLoading}
+                              cardsList={cardsList}
+                              handleGetMoviesData={handleGetMoviesData}
+                              saveMovies={false}
+                              isBurgerMenuOpen={isBurgerMenuOpen}
+                              handleOpenBurgerMenu={handleOpenBurgerMenu}
+                              handleCloseBurgerMenu={handleCloseBurgerMenu}
+                              handleLoggin={handleLogIn} loggedIn={loggedIn}
+                              handleCheckboxSet={handleSetFilterCheckboxValue}/>
+            </Route>
 
-          <Route path="/saved-movies">
-            <ProtectedRoute component={Movies}
-                            saveMovies={true}
-                            isBurgerMenuOpen={isBurgerMenuOpen}
-                            handleOpenBurgerMenu={handleOpenBurgerMenu}
-                            handleCloseBurgerMenu={handleCloseBurgerMenu}
-                            handleLoggin={handleLogIn} loggedIn={loggedIn}
-                            handleCheckboxSet={handleSetFilterCheckboxValue}/>
-          </Route>
+            <Route path="/saved-movies">
+              <ProtectedRoute component={Movies}
+                              saveMovies={true}
+                              isBurgerMenuOpen={isBurgerMenuOpen}
+                              handleOpenBurgerMenu={handleOpenBurgerMenu}
+                              handleCloseBurgerMenu={handleCloseBurgerMenu}
+                              handleLoggin={handleLogIn} loggedIn={loggedIn}
+                              handleCheckboxSet={handleSetFilterCheckboxValue}/>
+            </Route>
 
-          <Route path="/profile">
-            <ProtectedRoute component={Profile}
-                            isBurgerMenuOpen={isBurgerMenuOpen}
-                            handleOpenBurgerMenu={handleOpenBurgerMenu}
-                            handleCloseBurgerMenu={handleCloseBurgerMenu}
-                            handleLoggin={handleLogIn} loggedIn={loggedIn}
-                            handleLogOut={handleLogOut}/>
-          </Route>
+            <Route path="/profile">
+              <ProtectedRoute component={Profile}
+                              isBurgerMenuOpen={isBurgerMenuOpen}
+                              handleOpenBurgerMenu={handleOpenBurgerMenu}
+                              handleCloseBurgerMenu={handleCloseBurgerMenu}
+                              handleLoggin={handleLogIn} loggedIn={loggedIn}
+                              handleLogOut={handleLogOut}/>
+            </Route>
 
-          <Route path="/error">
-            <Error/>
-          </Route>
+            <Route path="/error">
+              <Error/>
+            </Route>
 
-          <Route path="/">
-            <Header isBurgerMenuOpen={isBurgerMenuOpen}
-                    handleOpenBurgerMenu={handleOpenBurgerMenu}
-                    handleCloseBurgerMenu={handleCloseBurgerMenu}
-                    handleLoggin={handleLogIn} loggedIn={loggedIn}/>
-            <Main/>
-            <Footer/>
-          </Route>
-        </Switch>
+            <Route path="/">
+              <Header isBurgerMenuOpen={isBurgerMenuOpen}
+                      handleOpenBurgerMenu={handleOpenBurgerMenu}
+                      handleCloseBurgerMenu={handleCloseBurgerMenu}
+                      handleLoggin={handleLogIn} loggedIn={loggedIn}/>
+              <Main/>
+              <Footer/>
+            </Route>
+          </Switch>
 
+        </div>
       </div>
-    </div>
-    // </CurrentUserContext.Consumer>)
+    </CurrentUser.Provider>
   )
 }
 

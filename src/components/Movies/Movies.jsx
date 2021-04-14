@@ -16,10 +16,11 @@ const Movies = (props) => {
               loggedIn={props.loggedIn}/>
       <SearchForm handleSubmit={props.handleGetMoviesData}
                   handleCheckboxSet={props.handleCheckboxSet}/>
-      {props.cardsList.length !== 0 ? <MoviesCardList saveMovies={props.saveMovies}
-                                                      cardsList={props.cardsList}/> : null}
-
-      <Preloader/>
+      <Preloader isLoading={props.isLoading}/>
+      {(props.cardsList.length === 0 && props.isLoading === false) ?
+        <p className='loading__results'>Ничего не найдено</p> :
+        <MoviesCardList saveMovies={props.saveMovies}
+                        cardsList={props.cardsList}/>}
       <Footer/>
     </div>
   )

@@ -11,6 +11,7 @@ class Api extends React.Component {
   _controlError(promise) {
     return promise.then((res) => {
       if (!res.ok) {
+        alert(res.statusText)
         return Promise.reject(`Ошибка: ${res.status}`);
       } else {
         return res.json()
@@ -48,6 +49,35 @@ class Api extends React.Component {
     return this._controlError(promise)
   }
 
+  /**
+   * Добавление фильма к себе в избранное
+   * @param token
+   * @returns {*}
+   */
+  addMovie(data) {
+    const promise = fetch(`${this._baseUrl}/movies`, {
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify(
+        {
+          country: data.country,
+          director: data.director,
+          duration: data.duration,
+          year: data.year,
+          description: data.description,
+          image: data.image,
+          trailer: data.trailer,
+          nameRU: data.nameRU,
+          nameEN: data.nameEN,
+          thumbnail: data.thumbnail,
+          owner: data.user,
+          movieId: data.movieId,
+        }
+      )
+    })
+    return this._controlError(promise)
+  }
+
 // Проверка валидности токена
   checkToken(token) {
     const promise = fetch(`${this._baseUrl}/users/me`, {
@@ -69,6 +99,7 @@ const api = new Api({
   headers: {
     'Accept': 'application/json',
     "Content-Type": "application/json",
+    'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
   }
 })
 
