@@ -65,12 +65,11 @@ class Api extends React.Component {
           duration: data.duration,
           year: data.year,
           description: data.description,
-          image: data.image,
+          image:  "https://api.nomoreparties.co" + data.image,
           trailer: data.trailer,
           nameRU: data.nameRU,
           nameEN: data.nameEN,
-          thumbnail: data.thumbnail,
-          owner: data.user,
+          thumbnail: "https://api.nomoreparties.co" + data.thumbnail,
           movieId: data.movieId,
         }
       )
