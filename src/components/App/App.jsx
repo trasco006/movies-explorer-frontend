@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import "./App.css"
 import Header from "../Header/Header";
 import Login from "../Login/Login";
@@ -10,78 +10,196 @@ import Profile from "../Profile/Profile";
 import {Route, Switch} from 'react-router-dom'
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
+import api from "../../utils/MainApi";
 import {BurgerMenu} from "../BurgerMenu/BurgerMenu";
-
+import ProtectedRoute from "../ProtectedRoute";
+import moviesApi from "../../utils/MoviesApi";
+import {CurrentUser} from "../../contexts/CurrentUserContext"
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(true);
-  const [filterCheckboxValue, setFilterCheckboxValue] = useState(false)
-
+  const [cardsList, setCardsList] = useState([])
+  const [userData, setUserData] = useState({})
+  const [loggedIn, setIsLogin] = useState(false);
+  const [filterCheckboxValue, setFilterChechboxValue] = useState(false)
   const [isBurgerMenuOpen, setBurgerMenuOpened] = useState(false)
+  const [isLoading, setLoading] = useState(false)
+
+  /**
+   * Получение списка фильмов с сервера и запись в стейт
+   */
+  const handleGetMoviesData = (param) => {
+    setLoading(true)
+    setCardsList([])
+    let a = []
+    moviesApi.getData()
+      .then(res => {
+        res.map(item => {
+          param = param.toLowerCase()
+          if (item.nameRU !== null && item.nameRU.toLowerCase().includes(param) || item.nameEN !== null && item.nameEN.toLowerCase().includes(param)) {
+            return a.push(item)
+          }
+        })
+        setCardsList(a)
+      })
+      .catch(() => alert("Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"))
+      .finally(
+        () => {
+          setLoading(false)
+        }
+      )
+  }
+
+  /**
+   * Ручное открытие бургерного меню
+   */
   const handleOpenBurgerMenu = () => {
     setBurgerMenuOpened(true)
   }
+
+  /**
+   * Ручное закрытие бургерного меню
+   */
   const handleCloseBurgerMenu = () => {
     setBurgerMenuOpened(false)
   }
 
-  const handleSetFilterCheckboxValue = () => {
-    setFilterCheckboxValue(!filterCheckboxValue)
-  }
-  const handleLogin = () => {
-    setLoggedIn(!loggedIn)
+  /**
+   * Эффект при изменении жизненного цикла
+   */
+  useEffect(() => {
+    handleTokenCheck()
+  }, [])
+
+  /**
+   * Ручная проверка валидности токена
+   */
+  const handleTokenCheck = () => {
+    if (localStorage.getItem('jwt')) {
+      const jwt = localStorage.getItem('jwt');
+      api.checkToken(jwt).then((res) => {
+        setIsLogin(true)
+        setUserData({
+          email: res.email,
+          name: res.name,
+          id: res._id
+        })
+      })
+        .catch((err) => {
+          alert(err.message);
+        })
+    }
   }
 
+  /**
+   * Запрос к серверу с параметрами входа, возвращает токен и проверяет его
+   * @param obj - {email : "email", password: "password"}
+   */
+  const handleLogIn = (obj) => {
+    api.signIn(obj)
+      .then((res) => {
+          setIsLogin(true)
+          localStorage.setItem('jwt', res.token);
+          handleTokenCheck();
+        }
+      )
+      .catch(() => {
+        setIsLogin(false)
+      })
+  }
+
+  /**
+   * Удаляет токен из localstorage, устанавливает isLogin на flase
+   */
+  const handleLogOut = () => {
+    localStorage.removeItem('jwt')
+    setIsLogin(false)
+  }
+
+  /**
+   * Делает запрос к серверу с параметрами для регистрации
+   * @param obj
+   */
+  const handleRegister = (obj) => {
+    api.signUp(obj)
+      .then(res => {
+        alert('Вы успешно зарегистрированы!')
+      })
+  }
+
+  /**
+   * Ручной переключатель чекбокса
+   * @param item
+   */
+  const handleSetFilterCheckboxValue = (item) => {
+    setFilterChechboxValue(!filterCheckboxValue)
+  }
   return (
-    <div className="app">
-      <div className="page">
-        {(isBurgerMenuOpen === true) ? <BurgerMenu closeBurgerMenu={handleCloseBurgerMenu}/> : null}
+    <CurrentUser.Provider value={userData}>
+      <div className="app">
+        <div className="page">
+          {(isBurgerMenuOpen === true) ? <BurgerMenu closeBurgerMenu={handleCloseBurgerMenu}/> : null}
           <Switch>
-          <Route path="/sign-in">
-            <Login/>
-          </Route>
-          <Route path="/movies">
-            <Header isBurgerMenuOpen={isBurgerMenuOpen}
-                    handleOpenBurgerMenu={handleOpenBurgerMenu}
-                    handleCloseBurgerMenu={handleCloseBurgerMenu}
-                    handleLoggin={handleLogin} loggedIn={loggedIn}/>
-            <Movies saveMovies={false} handleCheckboxSet={handleSetFilterCheckboxValue}/>
-            <Footer/>
-          </Route>
-          <Route path="/saved-movies">
-            <Header isBurgerMenuOpen={isBurgerMenuOpen}
-                    handleOpenBurgerMenu={handleOpenBurgerMenu}
-                    handleCloseBurgerMenu={handleCloseBurgerMenu}
-                    handleLoggin={handleLogin} loggedIn={loggedIn}/>
-            <Movies saveMovies={true} handleCheckboxSet={handleSetFilterCheckboxValue}/>
-            <Footer/>
-          </Route>
-          <Route path="/sign-up">
-            <Register/>
-          </Route>
-          <Route path="/profile">
-            <Header isBurgerMenuOpen={isBurgerMenuOpen}
-                    handleOpenBurgerMenu={handleOpenBurgerMenu}
-                    handleCloseBurgerMenu={handleCloseBurgerMenu}
-                    handleLoggin={handleLogin} loggedIn={loggedIn}/>
-            <Profile/>
-          </Route>
-          <Route path="/error">
-            <Error/>
-          </Route>
-          <Route path="/">
-            <Header isBurgerMenuOpen={isBurgerMenuOpen}
-                    handleOpenBurgerMenu={handleOpenBurgerMenu}
-                    handleCloseBurgerMenu={handleCloseBurgerMenu}
-                    handleLoggin={handleLogin} loggedIn={loggedIn}/>
-            <Main/>
-            <Footer/>
-          </Route>
-        </Switch>
+            {(loggedIn !== true) ? (<Route path="/sign-in">
+              <Login isLogin={loggedIn}
+                     handleLogIn={handleLogIn}/>
+            </Route>) : null}
 
+            {(loggedIn !== true) ? (<Route path="/sign-up">
+              <Register
+                handleRegister={handleRegister}
+                isLogin={loggedIn}/>
+            </Route>) : null}
+
+            <Route path="/movies">
+              <ProtectedRoute component={Movies}
+                              isLoading={isLoading}
+                              cardsList={cardsList}
+                              handleGetMoviesData={handleGetMoviesData}
+                              saveMovies={false}
+                              isBurgerMenuOpen={isBurgerMenuOpen}
+                              handleOpenBurgerMenu={handleOpenBurgerMenu}
+                              handleCloseBurgerMenu={handleCloseBurgerMenu}
+                              handleLoggin={handleLogIn} loggedIn={loggedIn}
+                              handleCheckboxSet={handleSetFilterCheckboxValue}/>
+            </Route>
+
+            <Route path="/saved-movies">
+              <ProtectedRoute component={Movies}
+                              saveMovies={true}
+                              isBurgerMenuOpen={isBurgerMenuOpen}
+                              handleOpenBurgerMenu={handleOpenBurgerMenu}
+                              handleCloseBurgerMenu={handleCloseBurgerMenu}
+                              handleLoggin={handleLogIn} loggedIn={loggedIn}
+                              handleCheckboxSet={handleSetFilterCheckboxValue}/>
+            </Route>
+
+            <Route path="/profile">
+              <ProtectedRoute component={Profile}
+                              isBurgerMenuOpen={isBurgerMenuOpen}
+                              handleOpenBurgerMenu={handleOpenBurgerMenu}
+                              handleCloseBurgerMenu={handleCloseBurgerMenu}
+                              handleLoggin={handleLogIn} loggedIn={loggedIn}
+                              handleLogOut={handleLogOut}/>
+            </Route>
+
+            <Route path="/error">
+              <Error/>
+            </Route>
+
+            <Route path="/">
+              <Header isBurgerMenuOpen={isBurgerMenuOpen}
+                      handleOpenBurgerMenu={handleOpenBurgerMenu}
+                      handleCloseBurgerMenu={handleCloseBurgerMenu}
+                      handleLoggin={handleLogIn} loggedIn={loggedIn}/>
+              <Main/>
+              <Footer/>
+            </Route>
+          </Switch>
+
+        </div>
       </div>
-    </div>
-  );
+    </CurrentUser.Provider>
+  )
 }
 
 export default App;

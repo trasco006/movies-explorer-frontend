@@ -21,7 +21,7 @@ export const BurgerMenu = (props) => {
             </li>
           </Link>
           <Link to='/movies'>
-            <li onClick={props.closeBurgerMenu}className={`burger__list-item ${(window.location.pathname === '/movies') ? 'burger__list-item_selected' : null }`}>
+            <li onClick={props.closeBurgerMenu} className={`burger__list-item ${(window.location.pathname === '/movies') ? 'burger__list-item_selected' : null }`}>
               Фильмы
             </li>
           </Link>
