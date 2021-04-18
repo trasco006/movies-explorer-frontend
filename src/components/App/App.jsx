@@ -23,6 +23,7 @@ function App() {
   const [filterCheckboxValue, setFilterChechboxValue] = useState(false)
   const [isBurgerMenuOpen, setBurgerMenuOpened] = useState(false)
   const [isLoading, setLoading] = useState(false)
+  const [likedMoviesList, setLikedMoviesList] = useState([])
 
   /**
    * Получение списка фильмов с сервера и запись в стейт
@@ -30,13 +31,21 @@ function App() {
   const handleGetMoviesData = (param) => {
     setLoading(true)
     setCardsList([])
+    setLikedMoviesList([])
+    handleGetUserMovies()
     let a = []
     moviesApi.getData()
       .then(res => {
         res.map(item => {
+          likedMoviesList.filter(e => {
+            if (e.nameRU === item.nameRU) {
+              item._id = e._id
+              item.isLiked = true
+            }
+          })
           param = param.toLowerCase()
           if (item.nameRU !== null && item.nameRU.toLowerCase().includes(param) || item.nameEN !== null && item.nameEN.toLowerCase().includes(param)) {
-            return a.push(item)
+            handleDurationSort(item, 40, a)
           }
         })
         setCardsList(a)
@@ -47,6 +56,35 @@ function App() {
           setLoading(false)
         }
       )
+  }
+
+  /**
+   * Функция проверки подходит ли элемент под длительность
+   * @param item проверяемый элемент
+   * @param value параметр длительности с которым сравнивается аргумент
+   * @param a массив в который записывается результат
+   * @returns {*}
+   */
+  const handleDurationSort = (item, value, a) => {
+    if (filterCheckboxValue === true) {
+      if (item.duration <= value) {
+        a.push(item)
+      }
+    } else {
+      a.push(item)
+    }
+  }
+
+  /**
+   * Получение списка лайкнутых фильмов
+   */
+  const handleGetUserMovies = () => {
+    api.getMovies()
+      .then(res => {
+        res.map(item => {
+          return likedMoviesList.push(item)
+        })
+      })
   }
 
   /**
@@ -68,6 +106,7 @@ function App() {
    */
   useEffect(() => {
     handleTokenCheck()
+    handleGetUserMovies()
   }, [])
 
   /**
@@ -154,7 +193,9 @@ function App() {
               <ProtectedRoute component={Movies}
                               isLoading={isLoading}
                               cardsList={cardsList}
+                              likedMoviesList={likedMoviesList}
                               handleGetMoviesData={handleGetMoviesData}
+                              handleGetLikedMovies={handleGetUserMovies}
                               saveMovies={false}
                               isBurgerMenuOpen={isBurgerMenuOpen}
                               handleOpenBurgerMenu={handleOpenBurgerMenu}
@@ -166,6 +207,8 @@ function App() {
             <Route path="/saved-movies">
               <ProtectedRoute component={Movies}
                               saveMovies={true}
+                              handleGetLikedMovies={handleGetUserMovies}
+                              likedMoviesList={likedMoviesList}
                               isBurgerMenuOpen={isBurgerMenuOpen}
                               handleOpenBurgerMenu={handleOpenBurgerMenu}
                               handleCloseBurgerMenu={handleCloseBurgerMenu}

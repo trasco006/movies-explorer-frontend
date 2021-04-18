@@ -4,31 +4,63 @@ import {CurrentUser} from "../../contexts/CurrentUserContext";
 import api from "../../utils/MainApi";
 
 const MoviesCard = (props) => {
-  const [isCardLiked, setCardLiked] = useState(false)
+  const [isCardLiked, setCardLiked] = useState(props.movieInfo.isLiked === true)
   const currentUser = React.useContext(CurrentUser);
 
-  const data = {
-    country: props.movieInfo.country,
-    director: props.movieInfo.director,
-    duration: props.movieInfo.duration,
-    year: props.movieInfo.year,
-    description: props.movieInfo.description,
-    image: props.movieInfo.image.url,
-    trailer: props.movieInfo.trailerLink,
-    nameRU: props.movieInfo.nameRU,
-    nameEN: props.movieInfo.nameEN,
-    thumbnail: props.movieInfo.image.formats.thumbnail.url,
-    user: currentUser.id,
-    movieId: props.movieInfo.id
+
+  /**
+   * Собирает данные с карточки для отправки на сервер
+   * @type {{duration, trailer: *, country: *, image, nameRU: *, thumbnail, year: *, director: *, description, movieId, nameEN: *}}
+   */
+  let data = {}
+  if (props.saveMovies === true) {
+    data = {
+      country: props.movieInfo.country,
+      director: props.movieInfo.director,
+      duration: props.movieInfo.duration,
+      year: props.movieInfo.year,
+      description: props.movieInfo.description,
+      image: props.movieInfo.image,
+      trailer: props.movieInfo.trailerLink,
+      nameRU: props.movieInfo.nameRU,
+      nameEN: props.movieInfo.nameEN,
+      thumbnail: props.movieInfo.thumbnail,
+      movieId: props.movieInfo.id
+    }
+  } else {
+    data = {
+      country: props.movieInfo.country,
+      director: props.movieInfo.director,
+      duration: props.movieInfo.duration,
+      year: props.movieInfo.year,
+      description: props.movieInfo.description,
+      image: `${props.movieInfo.image ? props.movieInfo.image.url : null}`,
+      trailer: props.movieInfo.trailerLink,
+      nameRU: props.movieInfo.nameRU,
+      nameEN: props.movieInfo.nameEN,
+      thumbnail: `${props.movieInfo.image ? props.movieInfo.image.formats.thumbnail.url : null}`,
+      movieId: props.movieInfo.id
+    }
   }
 
   const handleCardLike = () => {
-    api.addMovie(data).then(res=>{
-      console.log(res)
-    })
+    if (props.saveMovies === true) {
+      api.removeMovie(props.movieInfo._id).then(res => console.log(res))
+      setCardLiked(false)
+    } else {
 
-    setCardLiked(!isCardLiked)
+      if (isCardLiked === false) {
+        api.addMovie(data).then(res => {
+          setCardLiked(true)
+        })
+
+      } else {
+        api.removeMovie(props.movieInfo._id).then(res => console.log(res))
+        setCardLiked(false)
+      }
+    }
   }
+
   const durationFormat = (data) => {
     let a = props.movieInfo.duration;
     let hours = Math.floor(a / 60)
@@ -60,6 +92,7 @@ const MoviesCard = (props) => {
       </div>
     )
   } else {
+    console.log(props)
     return (
       <div className="movies-card">
         <div className="movies-card__image-container">

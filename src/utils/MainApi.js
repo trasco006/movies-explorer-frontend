@@ -65,7 +65,7 @@ class Api extends React.Component {
           duration: data.duration,
           year: data.year,
           description: data.description,
-          image:  "https://api.nomoreparties.co" + data.image,
+          image: "https://api.nomoreparties.co" + data.image,
           trailer: data.trailer,
           nameRU: data.nameRU,
           nameEN: data.nameEN,
@@ -76,6 +76,35 @@ class Api extends React.Component {
     })
     return this._controlError(promise)
   }
+
+  /**
+   * Получение сохранённых фильмов
+   * @param token
+   * @returns {*}
+   */
+  getMovies() {
+    const promise = fetch(`${this._baseUrl}/movies`, {
+        method: "GET",
+        headers: this._headers,
+      }
+    )
+    return this._controlError(promise)
+  }
+
+  /**
+   * Дизлайк
+   * @param token
+   * @returns {*}
+   */
+  removeMovie(movieId){
+    const promise = fetch(`${this._baseUrl}/movies/${movieId}`, {
+        method: "DELETE",
+        headers: this._headers,
+      }
+    )
+    return this._controlError(promise)
+  }
+
 
 // Проверка валидности токена
   checkToken(token) {
